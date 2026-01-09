@@ -82,7 +82,9 @@
         <div class="step-description">
             <strong>Acción:</strong> {{ step.description }}<br>
             <strong>Elemento:</strong> {{ step.element_name }} ({{ step.element_type }})<br>
+            {% if step.coordinates %}
             <strong>Coordenadas:</strong> {{ step.coordinates | join(', ') }}
+            {% endif %}
         </div>
         
         <div class="image-container">
