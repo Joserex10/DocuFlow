@@ -14,7 +14,7 @@ class ReportExporter:
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
 
-    def generate_pdf(self):
+    def generate_pdf(self, title: str = "Reporte de DocuFlow", author: str = "Anónimo"):
         print("Generating PDF report...")
         
         # Prepare Jinja2 environment
@@ -36,7 +36,9 @@ class ReportExporter:
 
         html_content = template.render(
             steps=cleaned_steps,
-            generation_time=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            generation_time=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            title=title,
+            author=author
         )
         
         # Output filename
@@ -56,6 +58,9 @@ class ReportExporter:
             print(f"Error generating PDF: {pisa_status.err}")
         else:
             print(f"PDF successfully generated: {output_path}")
+            
+        # Automatic Cleanup
+        self.cleanup_temp()
 
     def cleanup_temp(self, temp_dir: str = "temp_screenshots"):
         if os.path.exists(temp_dir):
