@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# Proyecto DocuFlow
+temp_screenshots/
+output/
+*.pdf
+*.log

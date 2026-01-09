@@ -1,0 +1,5 @@
+uiautomation
+pynput
+Pillow
+xhtml2pdf
+Jinja2

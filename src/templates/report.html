@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DocuFlow Report</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+            @frame footer_frame {
+                -pdf-frame-content: footerContent;
+                bottom: 1cm;
+                margin-left: 2cm;
+                margin-right: 2cm;
+                height: 1cm;
+            }
+        }
+        
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .step-container {
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+            border: 1px solid #eee;
+            padding: 15px;
+            background-color: #fafafa;
+        }
+
+        .step-header {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+
+        .step-description {
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .image-container {
+            text-align: center;
+            width: 100%;
+        }
+
+        .screenshot {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+        }
+        
+        #footerContent {
+            text-align: center;
+            font-size: 10px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reporte de DocuFlow</h1>
+    
+    <div style="font-size: 12px; margin-bottom: 20px; color: #666; text-align: center;">
+        Generado el: {{ generation_time }}
+    </div>
+
+    {% for step in steps %}
+    <div class="step-container">
+        <div class="step-header">Paso {{ loop.index }}</div>
+        <div class="step-description">
+            <strong>Acción:</strong> {{ step.description }}<br>
+            <strong>Elemento:</strong> {{ step.element_name }} ({{ step.element_type }})<br>
+            <strong>Coordenadas:</strong> {{ step.coordinates | join(', ') }}
+        </div>
+        
+        <div class="image-container">
+            <!-- Ensure image path is absolute for xhtml2pdf -->
+            <img class="screenshot" src="{{ step.screenshot }}" alt="Screenshot Step {{ loop.index }}">
+        </div>
+    </div>
+    {% endfor %}
+
+    <div id="footerContent">
+        Página <pdf:pagenumber> de <pdf:pagecount>
+    </div>
+</body>
+</html>
